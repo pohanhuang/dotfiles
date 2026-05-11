@@ -1,18 +1,20 @@
 build_harvester() {
   local tag="${1:-latest}"
 
-  export REPO=pohanhuangtw/harvester
-  export PUSH=true
+  export REPO=pohanhuangtw
+  export PUSH=false
   export USE_LOCAL_IMAGES=true
   export TAG="$tag"
 
-  echo "Building Harvester with:"
-  echo "  REPO: $REPO"
-  echo "  TAG: $TAG"
-  echo "  PUSH: $PUSH"
+  echo "Building Harvester with TAG: $TAG"
   echo ""
 
-  make
+  make || return 1
+
+  echo ""
+  echo "Pushing images..."
+  docker push ${REPO}/harvester:${TAG}
+  echo "✓ Done!"
 }
 
 alias bh="build_harvester "
