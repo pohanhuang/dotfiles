@@ -2,7 +2,7 @@ build_harvester() {
   local tag="${1:-latest}"
 
   export REPO=pohanhuangtw
-  export PUSH=false
+  unset PUSH=false
   export USE_LOCAL_IMAGES=true
   export TAG="$tag"
 
