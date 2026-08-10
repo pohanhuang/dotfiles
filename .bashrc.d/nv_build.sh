@@ -66,3 +66,9 @@ build_registry_adapter_image() {
 }
 alias brai=build_registry_adapter_image
 
+build_enforcer_image() {
+  local tag="${1:-latest}"
+  make build-enforcer-image REPO=pohanhuangtw TAG="$tag" &&
+    docker push "pohanhuangtw/enforcer:$tag"
+}
+alias bei=build_enforcer_image
