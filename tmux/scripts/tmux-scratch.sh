@@ -13,6 +13,9 @@ if ! tmux has -t "$session" 2>/dev/null; then
 	tmux set-option -t "$session_id" key-table popup    # Set to popup key table (enables Esc to close)
 	tmux set-option -t "$session_id" status off          # Hide status bar
 	tmux set-option -t "$session_id" mouse on            # Enable mouse in popup
+	# Enable clipboard in nested tmux (for OSC 52 to work in popup)
+	tmux set-option -s -t "$session_id" set-clipboard on
+	tmux set-option -t "$session_id" allow-passthrough on
 	session="$session_id"
 fi
 
