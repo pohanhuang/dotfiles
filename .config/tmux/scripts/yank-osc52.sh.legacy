@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+input=$(cat)
+encoded=$(printf '%s' "$input" | base64 | tr -d '\r\n')
+
+if [[ -n "${TMUX:-}" ]]; then
+  # OSC52 wrapped in tmux DCS passthrough
+  printf '\033Ptmux;\033\033]52;c;%s\007\033\\' "$encoded" >/dev/tty
+else
+  # Normal OSC52
+  printf '\033]52;c;%s\007' "$encoded" >/dev/tty
+fi
