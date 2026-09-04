@@ -4,15 +4,33 @@ local mux = wezterm.mux
 
 local autossh_bin = '/opt/homebrew/bin/autossh'
 
+-- Clear stale focus/mouse modes so clicks are not forwarded into remote shells.
+local reset_terminal_modes = table.concat({
+  '\27[0m',
+  '\27[?25h',
+  '\27[?9l',
+  '\27[?1000l',
+  '\27[?1002l',
+  '\27[?1003l',
+  '\27[?1004l',
+  '\27[?1005l',
+  '\27[?1006l',
+  '\27[?1015l',
+  '\27[?2004l',
+})
+
 local function autossh(host)
   return {
-    autossh_bin,
-    '-M',
-    '0',
-    '-o',
-    'ServerAliveInterval=30',
-    '-o',
-    'ServerAliveCountMax=3',
+    '/bin/sh',
+    '-lc',
+    ([[
+      printf '%s'
+      '%s' -M 0 -o ServerAliveInterval=30 -o ServerAliveCountMax=3 "$1"
+      status=$?
+      printf '%s'
+      exit "$status"
+    ]]):format(reset_terminal_modes, autossh_bin, reset_terminal_modes),
+    'autossh-wrapper',
     host,
   }
 end
