@@ -18,7 +18,7 @@ echo ""
 # 2. Reload tmux config if in tmux
 if [ -n "$TMUX" ]; then
   echo "2. Reloading tmux configuration..."
-  tmux source-file ~/.tmux.conf 2>&1 | sed 's/^/   /'
+  tmux source-file ~/.config/tmux/tmux.conf 2>&1 | sed 's/^/   /'
   echo "   ✓ tmux config reloaded"
   echo ""
 

@@ -2,10 +2,9 @@
 
 # Get current directory name for session-specific scratchpad
 current_dir="$(tmux display-message -p '#{pane_current_path}')"
-dir_name="$(basename "$current_dir")"
 
-# Define session name for scratchpad (per-directory)
-session="_popup_scratchpad_${dir_name}"
+# Define session name for scratchpad (per-tmux-session)
+session="_popup_scratchpad_$(tmux display-message -p '#{session_name}')"
 
 # Create session if it doesn't exist
 if ! tmux has -t "$session" 2>/dev/null; then
