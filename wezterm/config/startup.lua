@@ -2,9 +2,11 @@
 local wezterm = require 'wezterm'
 local mux = wezterm.mux
 
+local autossh_bin = '/opt/homebrew/bin/autossh'
+
 local function autossh(host)
   return {
-    'autossh',
+    autossh_bin,
     '-M',
     '0',
     '-o',
