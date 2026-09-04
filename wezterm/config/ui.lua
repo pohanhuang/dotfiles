@@ -2,7 +2,7 @@ local wezterm = require("wezterm")
 
 return {
 	hide_tab_bar_if_only_one_tab = true,
-	color_scheme = "Dracula+",
+	color_scheme = "Vs Code Dark+ (Gogh)",
 	font = wezterm.font_with_fallback({
 		{ family = "JetBrainsMono Nerd Font Mono", weight = "Regular" },
 		{ family = "Sarasa Mono SC", weight = "Regular" },
