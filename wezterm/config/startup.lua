@@ -2,16 +2,35 @@
 local wezterm = require 'wezterm'
 local mux = wezterm.mux
 
+local function autossh(host)
+  return {
+    'autossh',
+    '-M',
+    '0',
+    '-o',
+    'ServerAliveInterval=30',
+    '-o',
+    'ServerAliveCountMax=3',
+    host,
+  }
+end
+
 wezterm.on('gui-startup', function(cmd)
   local tab1, pane1, window1 = mux.spawn_window {
     workspace = 'lab-43',
-    args = { 'ssh', 'lab-43' },
+    args = autossh 'lab-43',
+    set_environment_variables = {
+      AUTOSSH_GATETIME = '0',
+    },
   }
   tab1:set_title('lab-43')
 
   local tab2, pane2, window2 = mux.spawn_window {
     workspace = 'po-server',
-    args = { 'ssh', 'po' },
+    args = autossh 'po',
+    set_environment_variables = {
+      AUTOSSH_GATETIME = '0',
+    },
   }
   tab2:set_title('po-server')
 
@@ -29,4 +48,6 @@ wezterm.on('gui-startup', function(cmd)
   mux.set_active_workspace 'lab-43'
 end)
 
-return {}
+return {
+  exit_behavior = 'Hold',
+}
