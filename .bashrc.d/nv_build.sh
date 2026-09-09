@@ -1,13 +1,13 @@
 build_controller_image() {
   local tag="${1:-latest}"
-  make build-controller-image REPO=pohanhuangtw TAG="$tag" &&
-    docker push "pohanhuangtw/controller:$tag"
+  make build-controller-image REPO=hhcs9527 TAG="$tag" &&
+    docker push "hhcs9527/controller:$tag"
 }
 alias bci=build_controller_image
 
 build_scanner_image() {
   local tag="${1:-latest}"
-  cd /home/po/suse/nv/scanner || return 1
+  cd /home/po/suse/neuvector/scanner || return 1
 
   docker buildx create --name neuvector --platform linux/amd64,linux/arm64,linux/s390x,linux/riscv64 2>/dev/null || true
   docker buildx use neuvector
@@ -22,10 +22,10 @@ build_scanner_image() {
     --build-arg COMMIT="$commit" \
     --build-arg VULNDB_VERSION="$tag" \
     --build-arg VULNDB_CHECKSUM="$db_sha" \
-    -t "pohanhuangtw/scanner:$tag" \
+    -t "hhcs9527/scanner:$tag" \
     --load \
     . &&
-    docker push "docker.io/pohanhuangtw/scanner:$tag"
+    docker push "docker.io/hhcs9527/scanner:$tag"
 
   cd - >/dev/null
 }
@@ -33,8 +33,8 @@ alias bsi=build_scanner_image
 
 build_registry_adapter_image() {
   local tag="${1:-latest}"
-  local repo="${2:-pohanhuangtw}"
-  cd /home/po/suse/nv/registry-adapter || return 1
+  local repo="${2:-hhcs9527}"
+  cd /home/po/suse/neuvector/registry-adapter || return 1
 
   docker buildx create --name neuvector --platform linux/amd64,linux/arm64,linux/s390x,linux/riscv64 2>/dev/null || true
   docker buildx use neuvector
@@ -68,7 +68,7 @@ alias brai=build_registry_adapter_image
 
 build_enforcer_image() {
   local tag="${1:-latest}"
-  make build-enforcer-image REPO=pohanhuangtw TAG="$tag" &&
-    docker push "pohanhuangtw/enforcer:$tag"
+  make build-enforcer-image REPO=hhcs9527 TAG="$tag" &&
+    docker push "hhcs9527/enforcer:$tag"
 }
 alias bei=build_enforcer_image
