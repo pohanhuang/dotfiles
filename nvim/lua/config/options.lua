@@ -21,3 +21,10 @@ vim.g.clipboard = {
 
 vim.opt.clipboard = "unnamedplus"
 vim.g.lazyvim_check_order = false
+
+-- Enable auto reload for better reflect the agnet changes
+vim.opt.autoread = true
+
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {
+  command = "checktime",
+})
