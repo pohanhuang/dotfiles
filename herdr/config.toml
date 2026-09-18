@@ -56,30 +56,30 @@ type        = "shell"
 command     = "~/.config/herdr/init-workspace.sh"
 description = "init workspace tabs"
 
-# Jump to named tabs
+# Jump to named tabs (scoped to the current workspace)
 [[keys.command]]
 key         = "prefix+n"
 type        = "shell"
-command     = "herdr tab list | python3 -c \"import sys,json,os; tabs=json.load(sys.stdin)['result']['tabs']; m=next((t for t in tabs if t.get('label')=='nvim'),None); os.system(f'herdr tab focus {m[\\\"tab_id\\\"]}') if m else None\""
+command     = "~/.config/herdr/focus-tab.sh nvim"
 description = "focus nvim tab"
 
 [[keys.command]]
 key         = "prefix+p"
 type        = "shell"
-command     = "herdr tab list | python3 -c \"import sys,json,os; tabs=json.load(sys.stdin)['result']['tabs']; m=next((t for t in tabs if t.get('label')=='pi'),None); os.system(f'herdr tab focus {m[\\\"tab_id\\\"]}') if m else None\""
+command     = "~/.config/herdr/focus-tab.sh pi"
 description = "focus pi tab"
 
 [[keys.command]]
 key         = "prefix+t"
 type        = "shell"
-command     = "herdr tab list | python3 -c \"import sys,json,os; tabs=json.load(sys.stdin)['result']['tabs']; m=next((t for t in tabs if t.get('label')=='terminal'),None); os.system(f'herdr tab focus {m[\\\"tab_id\\\"]}') if m else None\""
+command     = "~/.config/herdr/focus-tab.sh terminal"
 description = "focus terminal tab"
 
 # Jump to deploy tab (create if missing)
 [[keys.command]]
 key         = "prefix+l"
+command     = "~/.config/herdr/focus-tab.sh deploy --create"
 type        = "shell"
-command     = "herdr tab list | python3 -c \"import sys,json,os; ws=os.environ.get('HERDR_ACTIVE_WORKSPACE_ID',''); cwd=os.environ.get('HERDR_ACTIVE_PANE_CWD',os.path.expanduser('~')); tabs=json.load(sys.stdin)['result']['tabs']; tabs=[t for t in tabs if not ws or t.get('workspace_id')==ws]; m=next((t for t in tabs if t.get('label')=='deploy'),None); os.system(f\"herdr tab focus {m['tab_id']}\") if m else os.system(f\"herdr tab create --label deploy --focus --cwd {cwd}\" + (f\" --workspace {ws}\" if ws else ''))\""
 description = "focus or create deploy tab"
 
 # =============================================================================

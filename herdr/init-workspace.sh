@@ -2,11 +2,26 @@
 # init-workspace.sh — ensure nvim / pi / terminal tabs exist in a workspace
 # HERDR_ACTIVE_WORKSPACE_ID must be set to the target workspace
 
-CWD="${HERDR_ACTIVE_PANE_CWD:-$HOME}"
+# env is only set when hd() invokes us; from a keybinding it's missing, so fall
+# back to the focused pane reported by the server (authoritative cwd).
+CWD="${HERDR_ACTIVE_PANE_CWD:-}"
 WS="${HERDR_ACTIVE_WORKSPACE_ID:-}"
 
+if [ -z "$CWD" ] || [ -z "$WS" ]; then
+  FOCUSED=$(herdr pane list 2>/dev/null | python3 -c "
+import sys, json
+panes = json.load(sys.stdin)['result']['panes']
+p = next((p for p in panes if p.get('focused')), None)
+print(f\"{p['workspace_id']}\t{p.get('cwd') or ''}\" if p else '')
+")
+  [ -z "$WS" ]  && WS=$(printf '%s' "$FOCUSED" | cut -f1)
+  [ -z "$CWD" ] && CWD=$(printf '%s' "$FOCUSED" | cut -f2)
+fi
+
+CWD="${CWD:-$HOME}"
+
 if [ -z "$WS" ]; then
-  echo "init-workspace: no HERDR_ACTIVE_WORKSPACE_ID set" >&2
+  echo "init-workspace: cannot resolve workspace" >&2
   exit 1
 fi
 
