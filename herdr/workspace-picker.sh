@@ -1,7 +1,8 @@
 #!/bin/sh
-# workspace-picker.sh — fzf popup workspace switcher
+# workspace-picker.sh — fzf popup workspace switcher (ctrl-x closes a workspace)
 
-selected=$(herdr workspace list 2>/dev/null | python3 -c "
+list() {
+  herdr workspace list 2>/dev/null | python3 -c "
 import sys, json
 data = json.load(sys.stdin)
 rows = []
@@ -14,7 +15,15 @@ for w in data['result']['workspaces']:
 rows.sort(key=lambda r: r[0])
 for _, ws_id, display in rows:
     print(f'{ws_id}\t{display}')
-" | fzf --delimiter='\t' --with-nth=2 --prompt="workspace > " --height=40%)
+"
+}
+
+# --bind reload re-runs this script with 'list' so the rows regenerate in-place
+[ "$1" = "list" ] && { list; exit 0; }
+
+selected=$(list | fzf --delimiter='\t' --with-nth=2 --prompt="workspace > " --height=40% \
+  --header='enter: focus   ctrl-x: close' \
+  --bind "ctrl-x:execute-silent(herdr workspace close {1})+reload($0 list)")
 
 [ -z "$selected" ] && exit 0
 
