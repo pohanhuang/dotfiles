@@ -27,7 +27,7 @@ tabs = json.loads(subprocess.check_output(['herdr', 'tab', 'list', '--workspace'
 m = next((t for t in tabs if t.get('label') == label), None)
 
 if m:
-    subprocess.run(['herdr', 'tab', 'focus', m['tab_id']])
+    subprocess.run(['herdr', 'tab', 'focus', m['tab_id']], stdout=subprocess.DEVNULL)
 elif create:
-    subprocess.run(['herdr', 'tab', 'create', '--workspace', ws, '--label', label, '--cwd', cwd, '--focus'])
+    subprocess.run(['herdr', 'tab', 'create', '--workspace', ws, '--label', label, '--cwd', cwd, '--focus'], stdout=subprocess.DEVNULL)
 "

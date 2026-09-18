@@ -5,7 +5,7 @@ hkill() {
   herdr workspace list 2>/dev/null | python3 -c "
 import sys, json, subprocess
 for w in json.load(sys.stdin)['result']['workspaces']:
-    subprocess.run(['herdr', 'workspace', 'close', w['workspace_id']])
+    subprocess.run(['herdr', 'workspace', 'close', w['workspace_id']], stdout=subprocess.DEVNULL)
     print('closed:', w.get('label') or w['workspace_id'])
 "
 }
@@ -60,7 +60,7 @@ for w in data['result']['workspaces']:
   id=$(printf '%s' "$selected" | cut -f2)
 
   if [ "$type" = "W" ]; then
-    herdr workspace focus "$id"
+    herdr workspace focus "$id" >/dev/null
     herdr
   else
     hd "$id"
@@ -109,7 +109,7 @@ print(f'{match}\t{label}')
 
   if [ -n "$existing" ]; then
     echo "herdr: attaching '$label'"
-    herdr workspace focus "$existing"
+    herdr workspace focus "$existing" >/dev/null
     # open missing tabs (nvim / pi / terminal)
     HERDR_ACTIVE_PANE_CWD="$cwd" HERDR_ACTIVE_WORKSPACE_ID="$existing" \
       ~/.config/herdr/init-workspace.sh

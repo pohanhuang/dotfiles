@@ -53,23 +53,23 @@ print(match['tab_id'] if match else '')
 if ! has_tab "nvim"; then
   NVIM=$(herdr tab create $WS_FLAG --label "nvim" --cwd "$CWD")
   NVIM_PANE=$(echo "$NVIM" | python3 -c "import sys,json; print(json.load(sys.stdin)['result']['root_pane']['pane_id'])")
-  herdr pane run "$NVIM_PANE" "nvim ."
+  herdr pane run "$NVIM_PANE" "nvim ." >/dev/null
 fi
 
 # pi
 if ! has_tab "pi"; then
   PI=$(herdr tab create $WS_FLAG --label "pi" --cwd "$CWD")
   PI_PANE=$(echo "$PI" | python3 -c "import sys,json; print(json.load(sys.stdin)['result']['root_pane']['pane_id'])")
-  herdr pane run "$PI_PANE" "pi"
+  herdr pane run "$PI_PANE" "pi" >/dev/null
 fi
 
 # terminal
 if ! has_tab "terminal"; then
-  herdr tab create $WS_FLAG --label "terminal" --cwd "$CWD"
+  herdr tab create $WS_FLAG --label "terminal" --cwd "$CWD" >/dev/null
 fi
 
 # close default "1" tab
-[ -n "$DEFAULT_TAB" ] && herdr tab close "$DEFAULT_TAB"
+[ -n "$DEFAULT_TAB" ] && herdr tab close "$DEFAULT_TAB" >/dev/null
 
 # focus nvim
 NVIM_TAB=$(herdr tab list $WS_FLAG 2>/dev/null | python3 -c "
@@ -78,4 +78,4 @@ data = json.load(sys.stdin)
 match = next((t for t in data['result']['tabs'] if t.get('label') == 'nvim'), None)
 print(match['tab_id'] if match else '')
 ")
-[ -n "$NVIM_TAB" ] && herdr tab focus "$NVIM_TAB"
+[ -n "$NVIM_TAB" ] && herdr tab focus "$NVIM_TAB" >/dev/null
