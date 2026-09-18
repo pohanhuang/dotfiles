@@ -70,7 +70,7 @@ fi
 
 # deployment
 if ! has_tab "deployment"; then
-  herdr tab create $WS_FLAG --label "deployment" --cwd "$CWD"
+  herdr tab create $WS_FLAG --label "deployment" --cwd "$CWD" >/dev/null
 fi
 
 # close default "1" tab
