@@ -68,6 +68,11 @@ if ! has_tab "terminal"; then
   herdr tab create $WS_FLAG --label "terminal" --cwd "$CWD" >/dev/null
 fi
 
+# deployment
+if ! has_tab "deployment"; then
+  herdr tab create $WS_FLAG --label "deployment" --cwd "$CWD"
+fi
+
 # close default "1" tab
 [ -n "$DEFAULT_TAB" ] && herdr tab close "$DEFAULT_TAB" >/dev/null
 

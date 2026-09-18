@@ -14,7 +14,7 @@ focus_pane_up    = "ctrl+k"
 focus_pane_right = "ctrl+l"
 
 # Detach
-detach = "prefix+d"
+detach = "prefix+q"
 
 # Move tabs with opt+h/l
 previous_tab = "alt+h"
@@ -75,12 +75,12 @@ type        = "shell"
 command     = "~/.config/herdr/focus-tab.sh terminal"
 description = "focus terminal tab"
 
-# Jump to deploy tab (create if missing)
+# Jump to deployment tab (create if missing)
 [[keys.command]]
-key         = "prefix+l"
-command     = "~/.config/herdr/focus-tab.sh deploy --create"
+key         = "prefix+d"
+command     = "~/.config/herdr/focus-tab.sh deployment --create"
 type        = "shell"
-description = "focus or create deploy tab"
+description = "focus or create deployment tab"
 
 # =============================================================================
 # UI
