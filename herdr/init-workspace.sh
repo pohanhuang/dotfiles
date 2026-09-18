@@ -84,3 +84,9 @@ match = next((t for t in data['result']['tabs'] if t.get('label') == 'nvim'), No
 print(match['tab_id'] if match else '')
 ")
 [ -n "$NVIM_TAB" ] && herdr tab focus "$NVIM_TAB" >/dev/null
+
+# force a relayout so panes pick up the real terminal size instead of the
+# [server] headless_rows/cols defaults. no-op when no client is attached.
+# ponytail: zoom jiggle, drop it if herdr resizes panes on attach.
+herdr pane zoom --current --toggle >/dev/null 2>&1
+herdr pane zoom --current --toggle >/dev/null 2>&1
