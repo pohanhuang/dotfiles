@@ -25,28 +25,6 @@ _herdr_ensure_server() {
   return 1
 }
 
-# run init-workspace.sh only once a client is attached, so panes inherit the
-# real terminal size instead of the [server] headless_rows/cols defaults.
-# ponytail: polls pane_layout; switch to a server-side "on attach" hook if herdr adds one.
-_herdr_init_after_attach() {
-  local ws="$1" cwd="$2"
-  if [ -n "$HERDR_ACTIVE_WORKSPACE_ID" ]; then
-    HERDR_ACTIVE_WORKSPACE_ID="$ws" HERDR_ACTIVE_PANE_CWD="$cwd" \
-      ~/.config/herdr/init-workspace.sh
-    return
-  fi
-  (
-    i=0
-    while [ $i -lt 50 ]; do
-      herdr pane layout 2>/dev/null | grep -qv '"width":120,' && break
-      sleep 0.1
-      i=$((i+1))
-    done
-    HERDR_ACTIVE_WORKSPACE_ID="$ws" HERDR_ACTIVE_PANE_CWD="$cwd" \
-      ~/.config/herdr/init-workspace.sh >/dev/null 2>&1
-  ) &
-}
-
 # ha — fuzzy pick: running workspaces + zoxide dirs
 ha() {
   _herdr_ensure_server || return 1
@@ -133,13 +111,15 @@ print(f'{match}\t{label}')
     echo "herdr: attaching '$label'"
     herdr workspace focus "$existing" >/dev/null
     # open missing tabs (nvim / pi / terminal)
-    _herdr_init_after_attach "$existing" "$cwd"
+    HERDR_ACTIVE_PANE_CWD="$cwd" HERDR_ACTIVE_WORKSPACE_ID="$existing" \
+      ~/.config/herdr/init-workspace.sh
   else
     echo "herdr: creating '$label' at $cwd"
     result=$(herdr workspace create --cwd "$cwd" --label "$label")
     id=$(echo "$result" | python3 -c "import sys,json; print(json.load(sys.stdin)['result']['workspace']['workspace_id'])")
     pane_id=$(echo "$result" | python3 -c "import sys,json; print(json.load(sys.stdin)['result']['root_pane']['pane_id'])")
-    HERDR_ACTIVE_PANE_ID="$pane_id" _herdr_init_after_attach "$id" "$cwd"
+    HERDR_ACTIVE_WORKSPACE_ID="$id" HERDR_ACTIVE_PANE_CWD="$cwd" HERDR_ACTIVE_PANE_ID="$pane_id" \
+      ~/.config/herdr/init-workspace.sh
   fi
 
   # don't nest herdr if already inside it
