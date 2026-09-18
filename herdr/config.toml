@@ -16,6 +16,9 @@ focus_pane_right = "ctrl+l"
 # Detach
 detach = "prefix+q"
 
+# Settings (default was prefix+s)
+settings = "prefix+,"
+
 # Move tabs with opt+h/l
 previous_tab = "alt+h"
 next_tab     = "alt+l"
@@ -96,3 +99,7 @@ sidebar_collapsed_mode  = "hidden"
 [ui.toast]
 delivery      = "terminal"
 delay_seconds = 1
+
+[theme]
+name = "tokyo-night"
+auto_switch = false
