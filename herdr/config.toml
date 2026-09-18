@@ -87,6 +87,9 @@ description = "focus or create deployment tab"
 # =============================================================================
 
 [ui]
+# tab bar at the bottom: the top row's click hit-test is unreliable here
+# (herdr #796). move it back to "top" once clicking the top row works.
+tab_bar_position = "bottom"
 sidebar_start_collapsed = true
 sidebar_collapsed_mode  = "hidden"
 
