@@ -14,7 +14,14 @@ for w in json.load(sys.stdin)['result']['workspaces']:
 _herdr_ensure_server() {
   herdr workspace list >/dev/null 2>&1 && return 0
   echo "herdr: starting server..."
-  nohup herdr server >/dev/null 2>&1 &
+  # a headless server spawns panes at [server] headless_cols/rows (120x40 by
+  # default), so seed that fallback with this terminal's real size.
+  # ponytail: appends to a config copy; drop it if config.toml grows a [server] table.
+  local cfg="${TMPDIR:-/tmp}/herdr-server-config.toml"
+  { cat ~/.config/herdr/config.toml
+    printf '\n[server]\nheadless_cols = %s\nheadless_rows = %s\n' "$(tput cols)" "$(tput lines)"
+  } > "$cfg" 2>/dev/null
+  HERDR_CONFIG_PATH="$cfg" nohup herdr server >/dev/null 2>&1 &
   local i=0
   while [ $i -lt 30 ]; do
     sleep 0.2
