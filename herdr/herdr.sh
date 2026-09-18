@@ -71,7 +71,7 @@ for w in data['result']['workspaces']:
 hd() {
   _herdr_ensure_server || return 1
 
-  local cwd label existing result id pane_id
+  local cwd label existing found result id pane_id
 
   cwd=$(cd "${1:-.}" 2>/dev/null && pwd)
   if [ -z "$cwd" ]; then
@@ -79,15 +79,33 @@ hd() {
     return 1
   fi
 
-  label=$(basename "$cwd")
+  # Match on cwd, not basename: ~/a/harvester and ~/b/harvester are different
+  # workspaces. Also pick a non-colliding label for the sidebar/pickers.
+  # ponytail: a workspace's cwd is its lowest-numbered pane's cwd; good enough
+  # unless you start splitting root panes into unrelated directories.
+  found=$(herdr pane list 2>/dev/null | python3 -c "
+import sys, json, os
 
-  # check if workspace with this label already exists
-  existing=$(herdr workspace list 2>/dev/null | python3 -c "
-import sys, json
-data = json.load(sys.stdin)
-match = next((w for w in data['result']['workspaces'] if w.get('label') == '$label'), None)
-print(match['workspace_id'] if match else '')
+target = '$cwd'
+panes  = json.load(sys.stdin)['result']['panes']
+
+ws_cwd = {}
+for p in sorted(panes, key=lambda p: p['pane_id']):
+    ws_cwd.setdefault(p['workspace_id'], p.get('cwd') or '')
+
+match = next((ws for ws, c in ws_cwd.items() if c == target), '')
+
+label  = os.path.basename(target)
+taken  = {c: ws for ws, c in ws_cwd.items()}
+if not match and any(os.path.basename(c) == label for c in taken):
+    parent = os.path.basename(os.path.dirname(target))
+    label  = f'{parent}/{label}' if parent else label
+
+print(f'{match}\t{label}')
 ")
+  existing=$(printf '%s' "$found" | cut -f1)
+  label=$(printf '%s' "$found" | cut -f2)
+  [ -z "$label" ] && label=$(basename "$cwd")
 
   if [ -n "$existing" ]; then
     echo "herdr: attaching '$label'"
