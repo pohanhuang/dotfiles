@@ -14,3 +14,14 @@ vim.keymap.set("n", "x", '"_x', { desc = "Delete char to black hole" })
 
 -- Explicit normal Vim delete
 vim.keymap.set({ "n", "v" }, "<leader>D", "d", { desc = "Normal delete" })
+
+
+--Vetical buffe Split
+vim.keymap.set("n", "<leader>bL", "<cmd>rightbelow vsplit | wincmd p | bnext | wincmd p<cr>",
+  { desc = "Split buffer right" })
+vim.keymap.set("n", "<leader>bH", "<cmd>leftabove vsplit | wincmd p | bnext | wincmd p<cr>",
+  { desc = "Split buffer left" })
+
+--Window size move
+vim.keymap.set("n", "<leader>w.", "<cmd>vertical resize +10<cr>", { desc = "Wider" })
+vim.keymap.set("n", "<leader>w,", "<cmd>vertical resize -10<cr>", { desc = "Narrower" })
