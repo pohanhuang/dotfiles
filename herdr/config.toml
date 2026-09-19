@@ -7,11 +7,11 @@ onboarding = false
 [keys]
 prefix = "ctrl+b"
 
-# Move panes with ctrl+hjkl (nvim style)
-focus_pane_left  = "ctrl+h"
-focus_pane_down  = "ctrl+j"
-focus_pane_up    = "ctrl+k"
-focus_pane_right = "ctrl+l"
+# Move panes with prefix+hjkl
+focus_pane_left  = "prefix+h"
+focus_pane_down  = "prefix+j"
+focus_pane_up    = "prefix+k"
+focus_pane_right = "prefix+l"
 
 # Detach
 detach = "prefix+q"
