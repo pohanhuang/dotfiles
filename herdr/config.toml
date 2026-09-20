@@ -26,6 +26,9 @@ next_tab     = "alt+l"
 # Switch tabs by index
 switch_tab = "prefix+1..9"
 
+# Reuse prefix+r for the review tab instead of resize mode.
+resize_mode = ""
+
 # Remap next/previous workspace
 next_workspace     = "prefix+]"
 previous_workspace = "prefix+["
