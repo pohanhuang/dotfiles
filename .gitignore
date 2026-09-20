@@ -1,0 +1,6 @@
+**/.pi/
+**/herdr-client.log
+**/herdr-server.log
+**/release-notes.json
+**/session.json
+**/.plugins.lock
