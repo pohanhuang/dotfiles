@@ -1,5 +1,5 @@
 #!/bin/sh
-# init-workspace.sh — ensure nvim / pi / terminal tabs exist in a workspace
+# init-workspace.sh — ensure nvim / pi / terminal / review tabs exist in a workspace
 # HERDR_ACTIVE_WORKSPACE_ID must be set to the target workspace
 
 # env is only set when hd() invokes us; from a keybinding it's missing, so fall
@@ -66,6 +66,11 @@ fi
 # terminal
 if ! has_tab "terminal"; then
   herdr tab create $WS_FLAG --label "terminal" --cwd "$CWD" >/dev/null
+fi
+
+# review
+if ! has_tab "review"; then
+  herdr tab create $WS_FLAG --label "review" --cwd "$CWD" >/dev/null
 fi
 
 # deployment

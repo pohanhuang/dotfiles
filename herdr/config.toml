@@ -52,7 +52,7 @@ description = "agent picker"
 width       = "60%"
 height      = "20%"
 
-# Init workspace tabs (nvim / pi / terminal)
+# Init workspace tabs (nvim / pi / terminal / review)
 [[keys.command]]
 key         = "prefix+i"
 type        = "shell"
@@ -78,6 +78,12 @@ type        = "shell"
 command     = "~/.config/herdr/focus-tab.sh terminal"
 description = "focus terminal tab"
 
+[[keys.command]]
+key         = "prefix+r"
+type        = "shell"
+command     = "~/.config/herdr/focus-tab.sh review"
+description = "focus review tab"
+
 # Jump to deployment tab (create if missing)
 [[keys.command]]
 key         = "prefix+d"
@@ -96,10 +102,11 @@ tab_bar_position = "bottom"
 sidebar_start_collapsed = true
 sidebar_collapsed_mode  = "hidden"
 
+status_indicators = "symbols"
 [ui.toast]
 delivery      = "terminal"
 delay_seconds = 1
 
 [theme]
-name = "tokyo-night"
+name = "kanagawa"
 auto_switch = false
