@@ -44,7 +44,7 @@ type        = "popup"
 command     = "~/.config/herdr/workspace-picker.sh"
 description = "workspace picker"
 width       = "60%"
-height      = "20%"
+height      = "60%"
 
 # Agent picker popup (fzf)
 [[keys.command]]

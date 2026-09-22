@@ -18,15 +18,16 @@ _herdr_ensure_server() {
   # default), so seed that fallback with this terminal's real size.
   # ponytail: appends to a config copy; drop it if config.toml grows a [server] table.
   local cfg="${TMPDIR:-/tmp}/herdr-server-config.toml"
-  { cat ~/.config/herdr/config.toml
+  {
+    cat ~/.config/herdr/config.toml
     printf '\n[server]\nheadless_cols = %s\nheadless_rows = %s\n' "$(tput cols)" "$(tput lines)"
-  } > "$cfg" 2>/dev/null
-  HERDR_CONFIG_PATH="$cfg" nohup herdr server >/dev/null 2>&1 &
+  } >"$cfg" 2>/dev/null
+  HERDR_CONFIG_PATH="$cfg" setsid herdr server >/dev/null 2>&1 &
   local i=0
   while [ $i -lt 30 ]; do
     sleep 0.2
     herdr workspace list >/dev/null 2>&1 && return 0
-    i=$((i+1))
+    i=$((i + 1))
   done
   echo "herdr: server failed to start"
   return 1
@@ -46,12 +47,12 @@ data = json.load(sys.stdin)
 for w in data['result']['workspaces']:
     label = w.get('label') or w['workspace_id']
     print(f\"W\t{w['workspace_id']}\t⬡  {label}\")
-" >> "$tmp"
+" >>"$tmp"
 
   # recent dirs from zoxide
   zoxide query --list 2>/dev/null | while read -r p; do
     printf "Z\t%s\t   %s\n" "$p" "$p"
-  done >> "$tmp"
+  done >>"$tmp"
 
   if [ ! -s "$tmp" ]; then
     echo "herdr: nothing found"
@@ -59,7 +60,7 @@ for w in data['result']['workspaces']:
     return 1
   fi
 
-  selected=$(fzf --delimiter='\t' --with-nth=3 --prompt="❯ " --ansi < "$tmp")
+  selected=$(fzf --delimiter='\t' --with-nth=3 --prompt="❯ " --ansi <"$tmp")
   rm -f "$tmp"
   [ -z "$selected" ] && return
 
