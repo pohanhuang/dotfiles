@@ -1,0 +1,10 @@
+name: local-skills
+version: 1.0.0
+description: Personal skills for pohanhuang — work-sync and others.
+author: pohanhuang
+provides_skills:
+  - brainstorming
+  - systematic-debugging
+  - verification-before-completion
+  - writing-plans
+  - work-sync
