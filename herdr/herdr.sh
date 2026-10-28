@@ -71,12 +71,12 @@ for w in data['result']['workspaces']:
     herdr workspace focus "$id" >/dev/null
     herdr
   else
-    hd "$id"
+    hdr "$id"
   fi
 }
 
-# hd [path] — open or create workspace at path
-hd() {
+# hdr [path] — open or create workspace at path
+hdr() {
   _herdr_ensure_server || return 1
 
   local cwd label existing found result id pane_id

@@ -2,7 +2,7 @@
 # init-workspace.sh — ensure nvim / pi / terminal / review tabs exist in a workspace
 # HERDR_ACTIVE_WORKSPACE_ID must be set to the target workspace
 
-# env is only set when hd() invokes us; from a keybinding it's missing, so fall
+# env is only set when hdr() invokes us; from a keybinding it's missing, so fall
 # back to the focused pane reported by the server (authoritative cwd).
 CWD="${HERDR_ACTIVE_PANE_CWD:-}"
 WS="${HERDR_ACTIVE_WORKSPACE_ID:-}"

@@ -31,7 +31,7 @@ case "$type" in
     cwd=$(cd "$id" 2>/dev/null && pwd)
     [ -z "$cwd" ] && exit 1
 
-    # Mirrors hd(): match on cwd via lowest-numbered pane per workspace
+    # Mirrors hdr(): match on cwd via lowest-numbered pane per workspace
     found=$(herdr pane list 2>/dev/null | python3 -c "
 import sys, json, os
 target = '$cwd'
