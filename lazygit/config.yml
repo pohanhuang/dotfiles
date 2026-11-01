@@ -1,0 +1,31 @@
+git:
+  commit:
+   signOff: true
+gui:
+  theme:
+    selectedLineBgColor:
+      - "reverse"
+customCommands:
+  - key: "<c-r>"
+    description: "Rebase"
+    context: "global"
+    prompts:
+      - type: "menu"
+        title: "Remote?"
+        key: "Remote"
+        options:
+          - name: "upstream"
+            value: "upstream"
+          - name: "origin"
+            value: "origin"
+      - type: "menu"
+        title: "Branch?"
+        key: "Branch"
+        options:
+          - name: "main"
+            value: "main"
+          - name: "master"
+            value: "master"
+    command: "git fetch {{.Form.Remote}} && git rebase {{.Form.Remote}}/{{.Form.Branch}}"
+    loadingText: "Rebasing..."
+
