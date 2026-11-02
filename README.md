@@ -1,4 +1,13 @@
 # Dotfiles
+## Installation
+```bash
+mkdir -p ~/.config
+git clone git@github.com:pohanhuang/dotfiles.git ~/.config/dotfiles
+
+ln -s ~/.config/dotfiles/nvim     ~/.config/nvim
+ln -s ~/.config/dotfiles/lazygit  ~/.config/lazygit
+ln -s ~/.config/dotfiles/herdr    ~/.config/herdr
+```
 
 ## Pi setup
 
@@ -6,6 +15,10 @@
 git clone https://github.com/YOUR-USER/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 ./install-pi.sh
+
+pi install npm:@po.dev/pi-usage-dashboard
+pi install npm:@po.dev/pi-branch-workspace
+pi install npm:@po.dev/pi-ask-me
 ```
 
 This installs the ADHD, Ponytail, and web-access Pi packages, then symlinks these personal extensions into `~/.pi/agent/extensions/`:
