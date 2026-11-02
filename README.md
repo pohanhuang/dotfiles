@@ -4,6 +4,10 @@
 mkdir -p ~/.config
 git clone git@github.com:pohanhuang/dotfiles.git ~/.config/dotfiles
 
+brew install neovim
+brew install lazygit
+curl -fsSL https://herdr.dev/install.sh | sh
+
 ln -s ~/.config/dotfiles/nvim     ~/.config/nvim
 ln -s ~/.config/dotfiles/lazygit  ~/.config/lazygit
 ln -s ~/.config/dotfiles/herdr    ~/.config/herdr
@@ -19,6 +23,7 @@ cd ~/dotfiles
 pi install npm:@po.dev/pi-usage-dashboard
 pi install npm:@po.dev/pi-branch-workspace
 pi install npm:@po.dev/pi-ask-me
+pi install npm:pi-claude-bridge
 ```
 
 This installs the ADHD, Ponytail, and web-access Pi packages, then symlinks these personal extensions into `~/.pi/agent/extensions/`:
