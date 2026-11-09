@@ -1,21 +1,10 @@
 # Agent Rules
+
 # ponytail  -> code minimalism + ladder + self-review, pi extension
+
 # i-have-adhd -> output shape, pi extension
-# Only put here what neither covers.
 
-## Performance
-
-Name the bottleneck before optimizing: CPU / memory / IO / lock contention.
-Optimize the hot path only. Do not touch cold code.
-
-- No []byte<->string conversion or interface boxing in hot paths
-- Minimal mutex scope; sync.Pool for frequent short-lived allocations
-- Watch false sharing in concurrent structs
-
-Reporting: before/after p50+p99, root cause to kernel/hardware level.
-  Good: "p99 12ms -> 4ms, removed contended lock on metrics registry"
-  Bad:  "optimized it, faster now"
-A benchmark without a baseline means nothing.
+# Only put here what neither covers
 
 ## Efficiency
 
@@ -28,18 +17,24 @@ A benchmark without a baseline means nothing.
 - No progress narration. Final response: root cause -> change -> validation.
 - Ask only when answer cannot be found in the repository.
 
-## Review Gate
-
-After >30 lines changed or new abstraction added, spawn review subagent.
-Give it ONLY: the diff + original request in one sentence.
-NOT your reasoning, plan, or justification.
-
-Ask: "Does this diff over-build? Which rung was skipped?
-Return a delete-list or 'nothing to cut'."
-
-Act on delete-list, then report.
-
 ## Workspace
 
 On startup read `.pi/<current-branch>/workspace.md` if it exists.
 Background only: intent, constraints, decisions. Code wins on conflict.
+
+## File references
+
+When mentioning, modifying, or recommending an existing local file, include a
+separate **File references** section at the end of the response. Each reference
+must be on its own plain-text line in this exact format:
+
+```text
+relative/path/to/file:line
+relative/path/to/file:line:column
+```
+
+- Paths are relative to this project root.
+- Verify references before replying and include the line number whenever it is
+  known.
+- Do not use absolute paths, Markdown links, or prose in the reference line.
+- This format is consumed by a Neovim terminal Ctrl+click mapping.
