@@ -14,7 +14,11 @@
 local function open_terminal_file(path, line, column, terminal_win)
   local file = vim.fn.expand(path)
   if not file:match("^/") then
-    file = vim.fn.getcwd() .. "/" .. file
+    -- Resolve against the terminal process's cwd (where pi runs), not nvim's.
+    local pid = vim.b[vim.api.nvim_win_get_buf(terminal_win)].terminal_job_pid
+    local term_cwd = pid and vim.uv.fs_realpath("/proc/" .. pid .. "/cwd")
+    local candidate = term_cwd and term_cwd .. "/" .. file
+    file = (candidate and vim.fn.filereadable(candidate) == 1) and candidate or vim.fn.getcwd() .. "/" .. file
   end
   if vim.fn.filereadable(file) == 0 then
     vim.notify("File not found: " .. file, vim.log.levels.WARN)
