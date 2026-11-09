@@ -2,12 +2,24 @@ return {
   {
     "folke/snacks.nvim",
     opts = {
+      styles = {
+        terminal = {
+          position = "right",
+        },
+      },
       picker = {
         sources = {
           explorer = {
-            hidden = true, -- 顯示 dotfiles
-            ignored = true, -- 顯示 gitignore 的檔案；若不想顯示可改 false
+            hidden = true,
+            ignored = true,
             exclude = { ".git" },
+            win = {
+              list = {
+                keys = {
+                  ["<c-t>"] = false,
+                },
+              },
+            },
           },
         },
       },

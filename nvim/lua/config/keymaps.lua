@@ -22,6 +22,24 @@ vim.keymap.set("n", "<leader>bL", "<cmd>rightbelow vsplit | wincmd p | bnext | w
 vim.keymap.set("n", "<leader>bH", "<cmd>leftabove vsplit | wincmd p | bnext | wincmd p<cr>",
   { desc = "Split buffer left" })
 
+-- Terminal (right vertical split)
+vim.keymap.set({ "n", "t" }, "<c-t>", function()
+  Snacks.terminal.focus(nil, { count = 99, cwd = vim.env.HOME })
+end, { desc = "Terminal (Root Dir)" })
+
+-- Open file from selection/clipboard (path:line format)
+vim.keymap.set("n", "<leader>of", function()
+  local clip = vim.fn.getreg("*")
+  clip = clip:match("^%s*(.-)%s*$") -- trim whitespace
+  local path, line = clip:match("^(.+):(%d+)$")
+  if not path then path = clip end
+  if path == "" then return end
+  vim.schedule(function()
+    vim.cmd("edit " .. vim.fn.fnameescape(path))
+    if line then vim.cmd(line) end
+  end)
+end, { desc = "Open file from selection" })
+
 --Window size move
 vim.keymap.set("n", "<leader>w.", "<cmd>vertical resize +10<cr>", { desc = "Wider" })
 vim.keymap.set("n", "<leader>w,", "<cmd>vertical resize -10<cr>", { desc = "Narrower" })
