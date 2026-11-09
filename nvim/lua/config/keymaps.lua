@@ -3,7 +3,6 @@
 -- Add any additional keymaps here
 --
 -- Navigation
--- Navigation
 vim.keymap.set("n", "<C-o>", "<C-i>", { desc = "Jump forward" })
 vim.keymap.set("n", "<C-i>", "<C-o>", { desc = "Jump backward" })
 
@@ -14,6 +13,10 @@ vim.keymap.set("n", "x", '"_x', { desc = "Delete char to black hole" })
 
 -- Explicit normal Vim delete
 vim.keymap.set({ "n", "v" }, "<leader>D", "d", { desc = "Normal delete" })
+
+-- Buffer controls
+vim.keymap.set("n", "<C-e>", "<cmd>bdelete<cr>", { desc = "Close buffer" })
+vim.keymap.set("n", "<C-q>", "<cmd>%bdelete<cr>", { desc = "Close all buffers" })
 
 
 --Vetical buffe Split

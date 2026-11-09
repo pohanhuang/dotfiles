@@ -1,6 +1,10 @@
 return {
   "christoomey/vim-tmux-navigator",
   lazy = false,
+  -- inside herdr, nvim-herdr-navigation owns <C-hjkl>
+  cond = function()
+    return vim.env.HERDR_PANE_ID == nil
+  end,
   cmd = {
     "TmuxNavigateLeft",
     "TmuxNavigateDown",
