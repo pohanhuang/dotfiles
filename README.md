@@ -23,6 +23,7 @@ cd ~/dotfiles
 pi install npm:@po.dev/pi-usage-dashboard
 pi install npm:@po.dev/pi-branch-workspace
 pi install npm:@po.dev/pi-ask-me
+pi install npm:@po.dev/pi-file-ref-links
 pi install npm:pi-claude-bridge
 ```
 
