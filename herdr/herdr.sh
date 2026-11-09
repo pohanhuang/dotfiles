@@ -10,19 +10,36 @@ for w in json.load(sys.stdin)['result']['workspaces']:
 "
 }
 
+# the server reads this copy, not config.toml (see _herdr_write_config)
+_HERDR_SERVER_CFG="${TMPDIR:-/tmp}/herdr-server-config.toml"
+
+# _herdr_write_config <cols> <rows> — config.toml + a [server] table
+# a headless server spawns panes at [server] headless_cols/rows (120x40 by
+# default), so seed that fallback with a real terminal size.
+# ponytail: appends to a config copy; drop it if config.toml grows a [server] table.
+_herdr_write_config() {
+  {
+    cat ~/.config/herdr/config.toml
+    printf '\n[server]\nheadless_cols = %s\nheadless_rows = %s\n' "$1" "$2"
+  } >"$_HERDR_SERVER_CFG" 2>/dev/null
+}
+
+# hreload — apply config.toml edits to the running server.
+# plain `herdr server reload-config` only re-reads the stale copy.
+hreload() {
+  local cols rows
+  cols=$(sed -n 's/^headless_cols = //p' "$_HERDR_SERVER_CFG" 2>/dev/null)
+  rows=$(sed -n 's/^headless_rows = //p' "$_HERDR_SERVER_CFG" 2>/dev/null)
+  _herdr_write_config "${cols:-$(tput cols)}" "${rows:-$(tput lines)}"
+  herdr server reload-config
+}
+
 # ensure server is running, start headless if not
 _herdr_ensure_server() {
   herdr workspace list >/dev/null 2>&1 && return 0
   echo "herdr: starting server..."
-  # a headless server spawns panes at [server] headless_cols/rows (120x40 by
-  # default), so seed that fallback with this terminal's real size.
-  # ponytail: appends to a config copy; drop it if config.toml grows a [server] table.
-  local cfg="${TMPDIR:-/tmp}/herdr-server-config.toml"
-  {
-    cat ~/.config/herdr/config.toml
-    printf '\n[server]\nheadless_cols = %s\nheadless_rows = %s\n' "$(tput cols)" "$(tput lines)"
-  } >"$cfg" 2>/dev/null
-  HERDR_CONFIG_PATH="$cfg" setsid herdr server >/dev/null 2>&1 &
+  _herdr_write_config "$(tput cols)" "$(tput lines)"
+  HERDR_CONFIG_PATH="$_HERDR_SERVER_CFG" setsid herdr server >/dev/null 2>&1 &
   local i=0
   while [ $i -lt 30 ]; do
     sleep 0.2

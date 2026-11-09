@@ -7,11 +7,12 @@ onboarding = false
 [keys]
 prefix = "ctrl+b"
 
-# Move panes with prefix+hjkl
-focus_pane_left  = "prefix+h"
-focus_pane_down  = "prefix+j"
-focus_pane_up    = "prefix+k"
-focus_pane_right = "prefix+l"
+# Built-in pane focus unbound — ctrl+hjkl go to the vim-navigator plugin below
+# (nvim-herdr-navigation; installed by .bashrc.d/herdr.sh)
+focus_pane_left  = ""
+focus_pane_down  = ""
+focus_pane_up    = ""
+focus_pane_right = ""
 
 # Detach
 detach = "prefix+q"
@@ -36,6 +37,31 @@ previous_workspace = "prefix+["
 # =============================================================================
 # Custom command keybindings
 # =============================================================================
+
+# Vim-aware pane navigation: forwards ctrl+hjkl into nvim, else focuses pane
+[[keys.command]]
+key         = "ctrl+h"
+type        = "plugin_action"
+command     = "local.vim-navigator.left"
+description = "vim-aware pane left"
+
+[[keys.command]]
+key         = "ctrl+j"
+type        = "plugin_action"
+command     = "local.vim-navigator.down"
+description = "vim-aware pane down"
+
+[[keys.command]]
+key         = "ctrl+k"
+type        = "plugin_action"
+command     = "local.vim-navigator.up"
+description = "vim-aware pane up"
+
+[[keys.command]]
+key         = "ctrl+l"
+type        = "plugin_action"
+command     = "local.vim-navigator.right"
+description = "vim-aware pane right"
 
 # Workspace picker popup (fzf)
 [[keys.command]]
