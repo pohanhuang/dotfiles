@@ -27,7 +27,7 @@ vim.keymap.set("n", "<leader>bH", "<cmd>leftabove vsplit | wincmd p | bnext | wi
 
 -- Terminal (right vertical split)
 vim.keymap.set({ "n", "t" }, "<c-t>", function()
-  Snacks.terminal.focus(nil, { count = 99, cwd = vim.env.HOME })
+  Snacks.terminal.focus(nil, { count = 99 })
 end, { desc = "Terminal (Root Dir)" })
 
 -- Open file from selection/clipboard (path:line format)
