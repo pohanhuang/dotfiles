@@ -1,23 +1,22 @@
 # Dotfiles
 
-## Installation
+## Base setup (macOS)
+
+Clone the repository, install the base tools, and link their configuration:
 
 ```sh
 mkdir -p ~/.config
 git clone git@github.com:pohanhuang/dotfiles.git ~/.config/dotfiles
 
-# macOS: install Homebrew first when brew is not available
+# Run only when Homebrew is not already installed.
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 brew install neovim lazygit
-curl -fsSL https://herdr.dev/install.sh | sh
-
 ln -sfn ~/.config/dotfiles/nvim ~/.config/nvim
 ln -sfn ~/.config/dotfiles/lazygit ~/.config/lazygit
-zsh ~/.config/dotfiles/scripts/setup-herdr.zsh
 ```
 
-## zsh setup
+## Zsh setup
 
 A modular zsh configuration with Starship, fzf, zoxide, and a small built-in plugin loader.
 
@@ -136,7 +135,7 @@ The setup script installs the local Pi skills and copies `agents/AGENTS.md` to `
 
 Private Pi sessions, credentials, and `~/.pi/agent/usage/events.jsonl` are intentionally not tracked.
 
-## herdr setup (new machine)
+## Herdr setup
 
 Install Herdr first, then run the setup script. It refuses to overwrite an existing `~/.config/herdr` directory, so back it up first when needed.
 
