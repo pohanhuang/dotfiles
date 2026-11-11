@@ -47,8 +47,8 @@ lf() { # zsh follow lf navigation
 alias vim='nvim'
 alias nv='nvim'
 
-# Reload the repository-backed zsh configuration.
-alias src='source "$ZDOTDIR/.zshrc"'
+# Restart Zsh to reload the repository-backed configuration without reinitializing plugins.
+alias src='exec zsh'
 
 # =========================================================
 # Git
