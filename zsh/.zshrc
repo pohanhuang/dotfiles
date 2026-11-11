@@ -14,6 +14,7 @@
 # History
 # =========================================================
 
+mkdir -p "$XDG_STATE_HOME/zsh" "$XDG_CACHE_HOME/zsh"
 HISTFILE="$XDG_STATE_HOME/zsh/history"
 HISTSIZE=100000
 SAVEHIST=100000
@@ -42,8 +43,8 @@ if [[ -f ~/.config/lf/icons ]]; then
   export LF_ICONS
 fi
 
-# Initialize zoxide
-eval "$(zoxide init zsh)"
+# Initialize zoxide when installed.
+command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh)"
 
 # =========================================================
 # Completion
@@ -112,14 +113,13 @@ source "$ZDOTDIR/bindings.zsh"
 # Plugins and plugin manager
 source "$ZDOTDIR/plugins.zsh"
 
+# Shared work configuration
+for file in "$ZDOTDIR"/.zshrc.d/*.zsh(N); do
+  source "$file"
+done
+
 # Prompt/theme
 source "$ZDOTDIR/prompt.zsh"
 
-
-# =========================================================
-# User Custom Configurations
-# =========================================================
-
-if [[ -f "$ZDOTDIR/local.zsh" ]]; then
-  source "$ZDOTDIR/local.zsh"
-fi
+# Machine-local overrides
+[[ -f "$ZDOTDIR/local.zsh" ]] && source "$ZDOTDIR/local.zsh"

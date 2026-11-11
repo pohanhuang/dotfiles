@@ -8,6 +8,12 @@ return {
     return vim.env.HERDR_PANE_ID ~= nil
   end,
   event = "VeryLazy",
+  keys = {
+    { "<C-h>", function() require("herdr-navigation").left() end, desc = "Herdr navigate left" },
+    { "<C-j>", function() require("herdr-navigation").down() end, desc = "Herdr navigate down" },
+    { "<C-k>", function() require("herdr-navigation").up() end, desc = "Herdr navigate up" },
+    { "<C-l>", function() require("herdr-navigation").right() end, desc = "Herdr navigate right" },
+  },
   init = function(plugin)
     vim.opt.rtp:prepend(plugin.dir .. "/nvim-herdr-navigation")
   end,

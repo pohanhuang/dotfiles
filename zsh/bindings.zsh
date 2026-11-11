@@ -24,6 +24,17 @@ zvm_after_init() {
   # Ctrl+F -> fzf file picker (no hidden files)
   bindkey '^F' _fzf_file_no_hidden
 
+  # Keep Ctrl+T unbound instead of using fzf's default file widget.
+  bindkey -M emacs -r '^T'
+  bindkey -M viins -r '^T'
+  bindkey -M vicmd -r '^T'
+
+  # Terminals send Backspace as either ^? or ^H.
+  bindkey -M viins '^?' backward-delete-char
+  bindkey -M viins '^H' backward-delete-char
+  bindkey -M vicmd '^?' backward-char
+  bindkey -M vicmd '^H' backward-char
+
   # Ctrl+\ -> toggle autosuggestions (useful for screen recordings)
   bindkey '^\' autosuggest-toggle
 
@@ -31,8 +42,12 @@ zvm_after_init() {
   bindkey '^[[A' history-substring-search-up
   bindkey '^[[B' history-substring-search-down
 
+  # Vim normal mode: j/k browse matching history.
+  bindkey -M vicmd 'j' history-substring-search-down
+  bindkey -M vicmd 'k' history-substring-search-up
+
   # Only overwrite Ctrl+R if fzf is installed and its widgets are loaded
-  if zle -l | grep -q fzf-history-widget; then
+  if zle -l | command grep -q fzf-history-widget; then
     # Bind fzf specifically to the vi-insert mode (-M viins)
     bindkey -M viins '^R' fzf-history-widget
   fi

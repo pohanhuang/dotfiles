@@ -2,9 +2,12 @@
 
 # hkill — close all workspaces
 hkill() {
-  herdr workspace list 2>/dev/null | python3 -c "
+  local workspaces
+  workspaces=$(herdr workspace list 2>/dev/null) || return 0
+
+  printf '%s' "$workspaces" | python3 -c "
 import sys, json, subprocess
-for w in json.load(sys.stdin)['result']['workspaces']:
+for w in json.load(sys.stdin).get('result', {}).get('workspaces', []):
     subprocess.run(['herdr', 'workspace', 'close', w['workspace_id']], stdout=subprocess.DEVNULL)
     print('closed:', w.get('label') or w['workspace_id'])
 "
@@ -39,7 +42,11 @@ _herdr_ensure_server() {
   herdr workspace list >/dev/null 2>&1 && return 0
   echo "herdr: starting server..."
   _herdr_write_config "$(tput cols)" "$(tput lines)"
-  HERDR_CONFIG_PATH="$_HERDR_SERVER_CFG" setsid herdr server >/dev/null 2>&1 &
+  if command -v setsid >/dev/null 2>&1; then
+    HERDR_CONFIG_PATH="$_HERDR_SERVER_CFG" setsid herdr server >/dev/null 2>&1 &
+  else
+    HERDR_CONFIG_PATH="$_HERDR_SERVER_CFG" nohup herdr server >/dev/null 2>&1 &
+  fi
   local i=0
   while [ $i -lt 30 ]; do
     sleep 0.2
