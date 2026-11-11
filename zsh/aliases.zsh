@@ -45,6 +45,7 @@ lf() { # zsh follow lf navigation
 # =========================================================
 
 alias vim='nvim'
+alias nv='nvim'
 
 # Reload the repository-backed zsh configuration.
 alias src='source "$ZDOTDIR/.zshrc"'
@@ -56,7 +57,21 @@ alias src='source "$ZDOTDIR/.zshrc"'
 alias glog='PAGER="less -F -X" git log'                              # -F quit if one screen, -X no clear on exit
 alias gadog='PAGER="less -F -X" git log --all --decorate --oneline --graph'
 alias lz='lazygit'
+alias rbum='git fetch upstream && git rebase upstream/main'
+alias rbuma='git fetch upstream && git rebase upstream/master'
+alias rbom='git fetch origin && git rebase origin/main'
+alias rboma='git fetch origin && git rebase origin/master'
+alias rbumd='git fetch upstream && git rebase upstream/harvester-dev'
 alias dotfiles='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
+
+# =========================================================
+# Kubernetes
+# =========================================================
+
+alias k='kubectl '
+alias kbds='kubectl describe '
+alias kbg='kubectl get '
+alias kbl='kubectl log '
 
 # =========================================================
 # Video
