@@ -20,7 +20,7 @@ behind     = "[⇣$count ](bold cyan)"
 diverged   = "[⇡$ahead_count⇣$behind_count ](bold cyan)"
 staged     = "[+$count ](bold green)"
 modified   = "[●$count ](bold yellow)"
-untracked  = "[?$count ](bold white)"
+untracked  = ""
 deleted    = "[✘$count ](bold red)"
 conflicted = "[⚡$count ](bold red)"
 
@@ -33,8 +33,7 @@ symbol = ""
 format = "[$symbol $version](red) "
 
 [golang]
-symbol = ""
-format = "[$symbol $version](cyan) "
+disabled = true
 
 [php]
 symbol = ""
