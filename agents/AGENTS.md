@@ -22,9 +22,9 @@
 On startup read `.pi/<current-branch>/workspace.md` if it exists.
 Background only: intent, constraints, decisions. Code wins on conflict.
 
-## File references
+## Code references
 
-When mentioning any code reference, append inline after the mention:
-`path/to/file:line`
+When mentioning any code reference, append inline after the mention, use the absolute path:
+`/absolute/path/to/file:line`
 
-Example: the entrypoint (`cmd/main.go:12`) initializes the router.
+Example: the entrypoint (`/home/po/harvester/harvester-dev/cmd/main.go:12`) initializes the router.:> [!WARNING]
