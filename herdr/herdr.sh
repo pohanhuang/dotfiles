@@ -42,10 +42,12 @@ _herdr_ensure_server() {
   herdr workspace list >/dev/null 2>&1 && return 0
   echo "herdr: starting server..."
   _herdr_write_config "$(tput cols)" "$(tput lines)"
+  local _login_shell
+  _login_shell=$(getent passwd "$USER" | cut -d: -f7)
   if command -v setsid >/dev/null 2>&1; then
-    HERDR_CONFIG_PATH="$_HERDR_SERVER_CFG" setsid herdr server >/dev/null 2>&1 &
+    SHELL="$_login_shell" HERDR_CONFIG_PATH="$_HERDR_SERVER_CFG" setsid herdr server >/dev/null 2>&1 &
   else
-    HERDR_CONFIG_PATH="$_HERDR_SERVER_CFG" nohup herdr server >/dev/null 2>&1 &
+    SHELL="$_login_shell" HERDR_CONFIG_PATH="$_HERDR_SERVER_CFG" nohup herdr server >/dev/null 2>&1 &
   fi
   local i=0
   while [ $i -lt 30 ]; do
