@@ -48,7 +48,7 @@ alias vim='nvim'
 alias nv='nvim'
 
 # Reload the repository-backed Zsh configuration.
-alias src='source "$ZDOTDIR/.zshrc"'
+alias src='source "${ZDOTDIR:A:h}/scripts/src.zsh"'
 
 # =========================================================
 # Git
