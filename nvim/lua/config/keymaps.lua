@@ -30,6 +30,7 @@ vim.keymap.set({ "n", "t" }, "<c-t>", function()
   Snacks.terminal(nil, { count = 99 })
 end, { desc = "Terminal (Root Dir)" })
 
+
 -- Open file from selection/clipboard (path:line format)
 vim.keymap.set("n", "<leader>of", function()
   local clip = vim.fn.getreg("*")

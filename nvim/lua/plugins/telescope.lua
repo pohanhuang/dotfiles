@@ -3,6 +3,7 @@ return {
     "nvim-telescope/telescope.nvim",
     opts = {
       defaults = {
+        path_display = { "absolute" },
         vimgrep_arguments = {
           "rg",
           "--color=never",
