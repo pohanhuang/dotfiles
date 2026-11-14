@@ -5,6 +5,12 @@ return {
       opts.styles = opts.styles or {}
       opts.styles.terminal = { position = "right" }
       opts.picker = opts.picker or {}
+      local pi_action = function() Snacks.terminal("pi", { count = 99 }) end
+      opts.picker.win = opts.picker.win or {}
+      opts.picker.win.list = opts.picker.win.list or {}
+      opts.picker.win.list.keys = vim.tbl_extend("force", opts.picker.win.list.keys or {}, { ["<c-p>"] = pi_action })
+      opts.picker.win.input = opts.picker.win.input or {}
+      opts.picker.win.input.keys = vim.tbl_extend("force", opts.picker.win.input.keys or {}, { ["<c-p>"] = { pi_action, mode = { "i", "n" } } })
       opts.picker.sources = opts.picker.sources or {}
       opts.picker.sources.explorer = {
         hidden = true,
@@ -31,11 +37,7 @@ return {
           return require("snacks.picker.format").file(item, picker)
         end,
         win = {
-          list = {
-            keys = {
-              ["<c-t>"] = false,
-            },
-          },
+          list = { keys = { ["<c-t>"] = false } },
         },
       }
       opts.picker.sources.files = {
