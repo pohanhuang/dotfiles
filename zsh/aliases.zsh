@@ -65,6 +65,21 @@ alias rbumd='git fetch upstream && git rebase upstream/harvester-dev'
 alias dotfiles='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 
 # =========================================================
+# Environment loader
+# =========================================================
+
+# Usage: loadenv <name>  — sources zsh/env/<name>.sh
+loadenv() {
+    local env_dir="${ZDOTDIR:-$HOME/.config/zsh}/env"
+    local file="${env_dir}/${1}.sh"
+    if [[ ! -f "$file" ]]; then
+        echo "loadenv: no env '${1}' (looked in ${env_dir})" >&2
+        return 1
+    fi
+    source "$file" && echo "loaded ${1}"
+}
+
+# =========================================================
 # Kubernetes
 # =========================================================
 
