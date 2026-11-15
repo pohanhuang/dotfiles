@@ -5,6 +5,7 @@
 -- Navigation
 vim.keymap.set("n", "<C-o>", "<C-i>", { desc = "Jump forward" })
 vim.keymap.set("n", "<C-i>", "<C-o>", { desc = "Jump backward" })
+vim.keymap.set("n", "<C-]>", vim.lsp.buf.definition, { desc = "Go to definition (LSP)" })
 
 -- Default delete/change -> blackhole
 vim.keymap.set({ "n", "v" }, "d", '"_d', { desc = "Delete to black hole" })
