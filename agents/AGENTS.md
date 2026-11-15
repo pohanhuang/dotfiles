@@ -24,7 +24,14 @@ Background only: intent, constraints, decisions. Code wins on conflict.
 
 ## Code references
 
-When mentioning any code reference, append inline after the mention, use the absolute path:
-`/absolute/path/to/file:line`
+When mentioning any code reference, append inline after the mention.
 
-Example: the entrypoint (`/home/po/harvester/harvester-dev/cmd/main.go:12`) initializes the router.:> [!WARNING]
+- If the file is under the current working directory, use the relative path: `relative/path/to/file:line`
+- Otherwise use the full absolute path: `/absolute/path/to/file:line`
+
+Example: the entrypoint (`cmd/main.go:12`) initializes the router.
+
+## Todo
+
+If a todo.md or task description contains a TODO list, follow it step by step.
+Load and apply the todo skill: `/todo`
