@@ -85,12 +85,6 @@ if [[ -f /usr/share/fzf/key-bindings.zsh ]]; then
   source /usr/share/fzf/completion.zsh
 fi
 
-# Ubuntu
-if [[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]]; then
-  source /usr/share/doc/fzf/examples/key-bindings.zsh
-  source /usr/share/doc/fzf/examples/completion.zsh
-fi
-
 # Local Git-cloned fzf
 if [[ -f "$HOME/.fzf/shell/key-bindings.zsh" ]]; then
   source "$HOME/.fzf/shell/key-bindings.zsh"

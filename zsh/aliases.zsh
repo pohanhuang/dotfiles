@@ -76,7 +76,7 @@ loadenv() {
         echo "loadenv: no env '${1}' (looked in ${env_dir})" >&2
         return 1
     fi
-    source "$file" && echo "loaded ${1}"
+    source "$file"
 }
 
 # =========================================================
