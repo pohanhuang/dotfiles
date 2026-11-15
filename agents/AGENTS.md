@@ -26,10 +26,7 @@ Background only: intent, constraints, decisions. Code wins on conflict.
 
 When mentioning any code reference, append inline after the mention.
 
-- If the file is under the current working directory, use the relative path: `relative/path/to/file:line`
-- Otherwise use the full absolute path: `/absolute/path/to/file:line`
-
-Example: the entrypoint (`cmd/main.go:12`) initializes the router.
+- Always use the full absolute path: `/absolute/path/to/file:line`
 
 ## Todo
 
