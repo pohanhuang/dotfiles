@@ -8,6 +8,10 @@ vim.g.clipboard = "osc52"
 vim.opt.clipboard = "unnamedplus"
 vim.g.lazyvim_check_order = false
 
+vim.opt.mousescroll = "ver:3,hor:0"
+vim.opt.wrap = true
+vim.opt.linebreak = true
+
 -- Enable auto reload for better reflect the agnet changes
 vim.opt.autoread = true
 
