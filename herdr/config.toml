@@ -90,35 +90,16 @@ description = "init workspace tabs"
 
 # Jump to named tabs (scoped to the current workspace)
 [[keys.command]]
-key         = "prefix+n"
-type        = "shell"
-command     = "~/.config/herdr/focus-tab.sh nvim"
-description = "focus nvim tab"
-
-[[keys.command]]
-key         = "prefix+p"
-type        = "shell"
-command     = "~/.config/herdr/focus-tab.sh pi"
-description = "focus pi tab"
-
-[[keys.command]]
-key         = "prefix+t"
-type        = "shell"
-command     = "~/.config/herdr/focus-tab.sh terminal"
-description = "focus terminal tab"
-
-[[keys.command]]
-key         = "prefix+r"
-type        = "shell"
-command     = "~/.config/herdr/focus-tab.sh review"
-description = "focus review tab"
-
-# Jump to deployment tab (create if missing)
-[[keys.command]]
 key         = "prefix+d"
-command     = "~/.config/herdr/focus-tab.sh deployment --create"
 type        = "shell"
-description = "focus or create deployment tab"
+command     = "~/.config/herdr/focus-tab.sh dev"
+description = "focus dev tab"
+
+[[keys.command]]
+key         = "prefix+l"
+type        = "shell"
+command     = "~/.config/herdr/focus-tab.sh lab"
+description = "focus lab tab"
 
 # =============================================================================
 # UI
