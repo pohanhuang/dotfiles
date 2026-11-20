@@ -70,6 +70,13 @@ local function open_terminal_reference()
   end
 end
 
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "yaml", "yml" },
+  callback = function()
+    vim.b.autoformat = false
+  end,
+})
+
 local terminal_links = vim.api.nvim_create_augroup("terminal_links", { clear = true })
 vim.api.nvim_create_autocmd("TermOpen", {
   group = terminal_links,

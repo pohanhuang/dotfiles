@@ -12,6 +12,11 @@ return {
           },
         },
       },
+      setup = {
+        yamlls = function(client)
+          client.server_capabilities.documentFormattingProvider = false
+        end,
+      },
     },
   },
 }
