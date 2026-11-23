@@ -8,6 +8,8 @@ command -v pi >/dev/null || {
   exit 1
 }
 
+git config --global core.excludesFile "$repo_dir/git/ignore"
+
 pi install "$repo_dir/pi-skills"
 mkdir -p "$HOME/.pi/agent"
 cp "$repo_dir/agents/AGENTS.md" "$HOME/.pi/agent/AGENTS.md"

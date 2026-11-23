@@ -131,7 +131,7 @@ pi install npm:@po.dev/pi-file-ref-links
 pi install npm:pi-claude-bridge
 ```
 
-The setup script installs the local Pi skills and copies `agents/AGENTS.md` to `~/.pi/agent/AGENTS.md`. Each zsh startup then updates that copy only when the repository version changes. The setup script requires `pi` to be installed first.
+The setup script configures Git to use `git/ignore` as the global excludes file, installs the local Pi skills, and copies `agents/AGENTS.md` to `~/.pi/agent/AGENTS.md`. Each zsh startup then updates that copy only when the repository version changes. The setup script requires `pi` to be installed first.
 
 Private Pi sessions, credentials, and `~/.pi/agent/usage/events.jsonl` are intentionally not tracked.
 
