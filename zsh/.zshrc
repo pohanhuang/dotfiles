@@ -35,6 +35,15 @@ setopt NOBEEP
 setopt NUMERIC_GLOB_SORT  # sort file10 after file9, not after file1
 
 # =========================================================
+# Go
+# =========================================================
+
+if (( $+commands[go] )); then
+  typeset -U path
+  path+=("$(go env GOPATH)/bin")
+fi
+
+# =========================================================
 # Smart directory navigation & lf
 # =========================================================
 
