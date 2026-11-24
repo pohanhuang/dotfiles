@@ -126,6 +126,7 @@ Starship requires a [Nerd Font](https://www.nerdfonts.com) for the icons in `zsh
 ## Pi setup
 
 ```sh
+curl -fsSL https://pi.dev/install.sh | sh
 zsh ~/.config/dotfiles/scripts/setup-pi.zsh
 
 pi install npm:@po.dev/pi-usage-dashboard
