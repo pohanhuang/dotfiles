@@ -56,11 +56,13 @@ brew install zsh neovim eza bat fd fzf zoxide starship ripgrep
 ln -sfn ~/.config/dotfiles/zsh ~/.config/zsh
 ln -sfn ~/.config/zsh/.zshenv ~/.zshenv
 chsh -s "$(command -v zsh)"
-exec zsh
 
 # Change the login shell
 echo $(which zsh) | sudo tee -a /etc/shells
 chsh -s $(which zsh)
+
+# Change to zsh
+exec zsh
 ```
 
 `~/.zshenv` bootstraps `ZDOTDIR=~/.config/zsh`; no `/etc/zsh/zshenv` change is needed. The first interactive shell clones the configured plugins. Create `~/.config/zsh/local.zsh` for settings that belong only to the current machine.
