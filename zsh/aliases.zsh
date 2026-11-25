@@ -47,8 +47,8 @@ lf() { # zsh follow lf navigation
 alias vim='nvim'
 alias nv='nvim'
 
-# Reload the repository-backed Zsh configuration.
-alias src='source "${ZDOTDIR:A:h}/scripts/src.zsh"'
+# Update this dotfiles repository, then reload its configuration.
+alias src='source "${ZDOTDIR:A:h}/scripts/pull-src.zsh"'
 
 # =========================================================
 # Git
