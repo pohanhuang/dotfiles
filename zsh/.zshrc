@@ -94,6 +94,12 @@ if [[ -f /usr/share/fzf/key-bindings.zsh ]]; then
   source /usr/share/fzf/completion.zsh
 fi
 
+# Linuxbrew
+if [[ -f /home/linuxbrew/.linuxbrew/opt/fzf/shell/key-bindings.zsh ]]; then
+  source /home/linuxbrew/.linuxbrew/opt/fzf/shell/key-bindings.zsh
+  source /home/linuxbrew/.linuxbrew/opt/fzf/shell/completion.zsh
+fi
+
 # Local Git-cloned fzf
 if [[ -f "$HOME/.fzf/shell/key-bindings.zsh" ]]; then
   source "$HOME/.fzf/shell/key-bindings.zsh"
