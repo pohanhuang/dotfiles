@@ -38,12 +38,12 @@ vim.keymap.set(
 
 -- Terminal: horizontal at bottom
 vim.keymap.set({ "n", "t" }, "<c-t>", function()
-  Snacks.terminal(nil, { win = { position = "bottom", wo = { winbar = " Terminal" } } })
+  Snacks.terminal(nil, { win = { position = "bottom" } })
 end, { desc = "Terminal" })
 
 -- Pi agent terminal
 vim.keymap.set({ "n", "t" }, "<c-p>", function()
-  Snacks.terminal("pi", { count = 99, win = { position = "right", wo = { winbar = " Pi" } } })
+  Snacks.terminal("pi", { count = 99, win = { position = "right" } })
 end, { desc = "Pi Agent" })
 
 -- Open file from selection/clipboard (path:line format)

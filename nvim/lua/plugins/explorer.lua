@@ -6,7 +6,7 @@ return {
       opts.styles.terminal = { position = "right" }
       opts.picker = opts.picker or {}
       local pi_action = function()
-        Snacks.terminal("pi", { count = 99, win = { wo = { winbar = " Pi" } } })
+        Snacks.terminal("pi", { count = 99 })
       end
       opts.picker.win = opts.picker.win or {}
       opts.picker.win.list = opts.picker.win.list or {}
