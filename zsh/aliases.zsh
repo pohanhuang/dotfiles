@@ -64,6 +64,24 @@ alias rboma='git fetch origin && git rebase origin/master'
 alias rbumd='git fetch upstream && git rebase upstream/harvester-dev'
 alias dotfiles='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 
+# Fork an upstream GitHub repository into the authenticated account, clone the
+# fork, and configure the source repository as the `upstream` remote.
+# Usage: gfork harvester/pcidevices
+# Result: origin=<authenticated-user>/pcidevices, upstream=harvester/pcidevices
+gfork() {
+    if (( $# != 1 )); then
+        print -u2 'Usage: gfork <owner/repository>'
+        return 2
+    fi
+
+    if (( ! $+commands[gh] )); then
+        print -u2 'gfork: GitHub CLI (gh) is required.'
+        return 127
+    fi
+
+    gh repo fork "$1" --clone
+}
+
 # =========================================================
 # Environment loader
 # =========================================================
