@@ -1,28 +1,22 @@
 #!/usr/bin/env zsh
 # Update this dotfiles checkout, then apply its configuration to the current shell.
 
-_dotfiles_pull_src() {
-  emulate -L zsh
+_dotfiles_pull_src_path="${(%):-%x}"
+_dotfiles_pull_src_repo="${_dotfiles_pull_src_path:A:h:h}"
+_dotfiles_pull_src_original_dir="$PWD"
+_dotfiles_pull_src_result=0
 
-  local script_path repo_dir original_dir result
-  script_path="${(%):-%x}"
-  repo_dir="${script_path:A:h:h}"
-  original_dir="$PWD"
+builtin cd "$_dotfiles_pull_src_repo" || _dotfiles_pull_src_result=1
+if (( _dotfiles_pull_src_result == 0 )) && ! git pull; then
+  _dotfiles_pull_src_result=1
+fi
+builtin cd "$_dotfiles_pull_src_original_dir" || _dotfiles_pull_src_result=1
 
-  builtin cd "$repo_dir" || return
-  if ! git pull; then
-    builtin cd "$original_dir"
-    return 1
-  fi
+if (( _dotfiles_pull_src_result == 0 )); then
+  export ZDOTDIR="${ZDOTDIR:-$_dotfiles_pull_src_repo/zsh}"
+  source "$_dotfiles_pull_src_repo/scripts/src.zsh"
+  _dotfiles_pull_src_result=$?
+fi
 
-  export ZDOTDIR="${ZDOTDIR:-$repo_dir/zsh}"
-  source "$repo_dir/scripts/src.zsh"
-  result=$?
-  builtin cd "$original_dir"
-  return "$result"
-}
-
-_dotfiles_pull_src "$@"
-result=$?
-unset -f _dotfiles_pull_src
-return "$result" 2>/dev/null || exit "$result"
+unset _dotfiles_pull_src_path _dotfiles_pull_src_repo _dotfiles_pull_src_original_dir
+return "$_dotfiles_pull_src_result" 2>/dev/null || exit "$_dotfiles_pull_src_result"
