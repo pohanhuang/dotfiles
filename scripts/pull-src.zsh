@@ -4,8 +4,8 @@
 _dotfiles_pull_src() {
   emulate -L zsh
 
-  local script_path repo_dir original_dir status
-  script_path="${(%):-%N}"
+  local script_path repo_dir original_dir result
+  script_path="${(%):-%x}"
   repo_dir="${script_path:A:h:h}"
   original_dir="$PWD"
 
@@ -17,12 +17,12 @@ _dotfiles_pull_src() {
 
   export ZDOTDIR="${ZDOTDIR:-$repo_dir/zsh}"
   source "$repo_dir/scripts/src.zsh"
-  status=$?
+  result=$?
   builtin cd "$original_dir"
-  return "$status"
+  return "$result"
 }
 
 _dotfiles_pull_src "$@"
-status=$?
+result=$?
 unset -f _dotfiles_pull_src
-return "$status" 2>/dev/null || exit "$status"
+return "$result" 2>/dev/null || exit "$result"
