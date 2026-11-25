@@ -5,7 +5,9 @@ return {
       opts.styles = opts.styles or {}
       opts.styles.terminal = { position = "right" }
       opts.picker = opts.picker or {}
-      local pi_action = function() Snacks.terminal("pi", { count = 99 }) end
+      local pi_action = function()
+        Snacks.terminal("pi", { count = 99, win = { wo = { winbar = " Pi" } } })
+      end
       opts.picker.win = opts.picker.win or {}
       opts.picker.win.list = opts.picker.win.list or {}
       opts.picker.win.list.keys = vim.tbl_extend("force", opts.picker.win.list.keys or {}, { ["<c-p>"] = pi_action })

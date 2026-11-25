@@ -9,6 +9,23 @@
 
 -- (clipboard is set in options.lua via vim.g.clipboard = "osc52")
 
+-- Some terminal multiplexers update the PTY size without delivering SIGWINCH.
+-- Re-request it when focus returns so Neovim redraws to the full pane height.
+local function refresh_terminal_size()
+  vim.uv.kill(vim.uv.os_getpid(), vim.uv.constants.SIGWINCH)
+  vim.cmd("redraw!")
+end
+
+vim.api.nvim_create_user_command("RefreshTerminalSize", refresh_terminal_size, {
+  desc = "Refresh terminal size and redraw",
+})
+
+local terminal_resize = vim.api.nvim_create_augroup("terminal_resize", { clear = true })
+vim.api.nvim_create_autocmd("FocusGained", {
+  group = terminal_resize,
+  callback = refresh_terminal_size,
+})
+
 -- In terminal buffers, Ctrl+click a file path (optionally `:line[:column]`)
 -- emitted by Pi to open it in the previous editor window.
 local function open_terminal_file(path, line, column, terminal_win)

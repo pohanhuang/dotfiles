@@ -18,35 +18,50 @@ vim.keymap.set({ "n", "v" }, "<leader>D", "d", { desc = "Normal delete" })
 -- Buffer controls
 vim.keymap.set("n", "<C-e>", "<cmd>bdelete<cr>", { desc = "Close buffer" })
 vim.keymap.set("n", "<C-q>", "<cmd>%bdelete<cr>", { desc = "Close all buffers" })
-
+vim.keymap.set("n", "<leader>uR", "<cmd>RefreshTerminalSize<cr>", {
+  desc = "Refresh terminal size",
+})
 
 --Vetical buffe Split
-vim.keymap.set("n", "<leader>bL", "<cmd>rightbelow vsplit | wincmd p | bnext | wincmd p<cr>",
-  { desc = "Split buffer right" })
-vim.keymap.set("n", "<leader>bH", "<cmd>leftabove vsplit | wincmd p | bnext | wincmd p<cr>",
-  { desc = "Split buffer left" })
+vim.keymap.set(
+  "n",
+  "<leader>bL",
+  "<cmd>rightbelow vsplit | wincmd p | bnext | wincmd p<cr>",
+  { desc = "Split buffer right" }
+)
+vim.keymap.set(
+  "n",
+  "<leader>bH",
+  "<cmd>leftabove vsplit | wincmd p | bnext | wincmd p<cr>",
+  { desc = "Split buffer left" }
+)
 
 -- Terminal: horizontal at bottom
 vim.keymap.set({ "n", "t" }, "<c-t>", function()
-  Snacks.terminal(nil, { win = { position = "bottom" } })
+  Snacks.terminal(nil, { win = { position = "bottom", wo = { winbar = " Terminal" } } })
 end, { desc = "Terminal" })
 
 -- Pi agent terminal
 vim.keymap.set({ "n", "t" }, "<c-p>", function()
-  Snacks.terminal("pi", { count = 99 })
+  Snacks.terminal("pi", { count = 99, win = { position = "right", wo = { winbar = " Pi" } } })
 end, { desc = "Pi Agent" })
-
 
 -- Open file from selection/clipboard (path:line format)
 vim.keymap.set("n", "<leader>of", function()
   local clip = vim.fn.getreg("*")
   clip = clip:match("^%s*(.-)%s*$") -- trim whitespace
   local path, line = clip:match("^(.+):(%d+)$")
-  if not path then path = clip end
-  if path == "" then return end
+  if not path then
+    path = clip
+  end
+  if path == "" then
+    return
+  end
   vim.schedule(function()
     vim.cmd("edit " .. vim.fn.fnameescape(path))
-    if line then vim.cmd(line) end
+    if line then
+      vim.cmd(line)
+    end
   end)
 end, { desc = "Open file from selection" })
 
