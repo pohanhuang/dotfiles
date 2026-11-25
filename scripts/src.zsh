@@ -16,6 +16,8 @@ _link lazygit  "$HOME/.config/lazygit"
 _link nvim     "$HOME/.config/nvim"
 _link herdr    "$HOME/.config/herdr"
 
+source "$_df/scripts/cron.zsh"
+
 unset _df _link
 
 source "$ZDOTDIR/.zshrc"
