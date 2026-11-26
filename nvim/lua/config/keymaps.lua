@@ -41,9 +41,9 @@ vim.keymap.set({ "n", "t" }, "<c-t>", function()
   Snacks.terminal(nil, { win = { position = "bottom" } })
 end, { desc = "Terminal" })
 
--- Pi agent terminal
+-- Pi agent terminal: start an interactive Zsh so its pi() wrapper runs first.
 vim.keymap.set({ "n", "t" }, "<c-p>", function()
-  Snacks.terminal("pi", { count = 99, win = { position = "right" } })
+  Snacks.terminal({ vim.fn.exepath("zsh"), "-ic", "pi" }, { count = 99, win = { position = "right" } })
 end, { desc = "Pi Agent" })
 
 -- Open file from selection/clipboard (path:line format)
